@@ -43,7 +43,7 @@ namespace Api_de_cinema.controllers
             {
                 var sql = $"""
                     INSERT OR IGNORE INTO {name} (Codigo, Status)
-                    VALUES ('{lugar}', 0);
+                    VALUES (@lugar, 0);
                     """;
 
                 var rows = await banco.Database.ExecuteSqlRawAsync(
@@ -77,6 +77,7 @@ namespace Api_de_cinema.controllers
                 }
 
                 await connection.CloseAsync();
+
                 return Results.Ok(tabelas);
             });
         }
@@ -94,7 +95,9 @@ namespace Api_de_cinema.controllers
                         Status INTEGER NOT NULL
                     );
                 """;
+
                 await banco.Database.ExecuteSqlRawAsync(SQL);
+
                 return Results.Ok($"tabela criada de nome {name}");
             });
         }
